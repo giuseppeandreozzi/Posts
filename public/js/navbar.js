@@ -112,3 +112,49 @@ function checkSignForm(){
 	
 	return true;
 }
+
+const buttonSubmitSign = document.querySelector("form[name=signForm] input[value=Registrati]");
+buttonSubmitSign.addEventListener("click", function(event) {
+	event.preventDefault();
+
+	fetch("http://localhost:3030/signup", {
+		method: "POST",
+		headers: {
+			"Content-Type":"application/json"
+		},
+		body: JSON.stringify({
+			username: document.querySelector("form[name=signForm] input[name=username]").value,
+			password: document.querySelector("form[name=signForm] input[name=password]").value,
+			email: document.querySelector("form[name=signForm] input[name=email]").value
+		})
+	}).then(result => result.json()).then(response => {
+		const span = document.querySelector("span#errorSign");
+		span.innerHTML = response.success;
+		span.style.display = "inline-block";
+	}).catch(err => {
+		console.log(err);
+	})
+});
+
+const buttonSubmitLog = document.querySelector("form[name=logForm] input[value=Entra]");
+buttonSubmitLog.addEventListener("click", function(event) {
+	event.preventDefault();
+
+	fetch("http://localhost:3030/login", {
+		method: "POST",
+		headers: {
+			"Content-Type":"application/json"
+		},
+		body: JSON.stringify({
+			username: document.querySelector("form[name=logForm] input[name=username]").value,
+			password: document.querySelector("form[name=logForm] input[name=password]").value,
+		})
+	}).then(result => result.json()).then(response => {
+		const span = document.querySelector("span#errorLog");
+		span.innerHTML = response.success;
+		span.style.display = "inline-block";
+		document.cookie = "token=" + decodeURIComponent(response.token)
+	}).catch(err => {
+		console.log(err);
+	})
+});

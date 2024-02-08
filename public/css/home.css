@@ -28,4 +28,8 @@ img.animation{
 	right: 15px;
 }
 
-
+p#errorPost{
+	display: none;
+	color: red;
+	font-size: 100%;
+}

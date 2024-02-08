@@ -3,11 +3,10 @@ import * as path from "path";
 import routes from "./routes/routes.js";
 import * as mongoose from "mongoose";
 import 'dotenv/config';
-import multer from "multer";
+
 
 const app = express();
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
+
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -20,8 +19,6 @@ app.use((req, res, next) => {
     res.set("Access-Control-Allow-Headers", "Authorization, Content-Type");
     next();
 });
-
-app.use(upload.single("image"));
 
 app.use(routes);
 
